@@ -35,7 +35,9 @@ const createPlaylist = asyncHandler(async (req, res) => {
   if (!createdPlaylist) {
     throw new ApiError(500, "Playlist could not be created");
   }
-
+// Saving playlist to database
+ const savedPlaylist = await newPlaylist.save();
+  
   // return response
   return res
     .status(200)
