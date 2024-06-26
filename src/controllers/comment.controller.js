@@ -193,6 +193,12 @@ const deleteComment = asyncHandler(async (req, res) => {
         throw new ApiError(500 , "Comment not deleted successfully")
     }
 
+      const video = await Video.findById(comment.video);
+   if (video) {
+    video.commentCount = Math.max(0 , video.commentCount - 1);
+    await video.save();
+   }
+
     // return success message in the response
     return res.status(200)
         .json(new ApiResponse(200 , {} , "Comment Deleted Successfully"))
